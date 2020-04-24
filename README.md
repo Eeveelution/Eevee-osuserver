@@ -23,12 +23,21 @@ return Usernames like "Score" or "Rank" or anything that we can record.
 Example Score Ranking:
 
 [S] Ranked Score
+
 Score: 10000000 Combo: 0
+
 [A] Global Leaderboard Rank
+
 Score: 933 Combo: 0
+
 [B] Total Score
+
 Score: 15000000 Combo: 0
+
 [C] EXPERIMENTAL: Performance
+
 Score: 892 Combo: 0
+
 [D] EXPERIMENTAL: Performance Ranking
+
 Score: 16 Combo: 0
