@@ -16,7 +16,7 @@
         
         if($check_usedname->num_rows == 0){
             $userid = $connection->query("SELECT * FROM players")->num_rows + 10;
-            $sql_insert = "INSERT INTO players (id, playername, md5pass, score) VALUES (". $userid . ",'" . $connection->real_escape_string($wished_username) . "','" . hash("md5", $wished_password) . "',0)";
+            $sql_insert = "INSERT INTO players (id, playername, md5pass, score, banned) VALUES (". $userid . ",'" . $connection->real_escape_string($wished_username) . "','" . hash("md5", $wished_password) . "',0, 'false')";
 
             if ($connection->query($sql_insert) === TRUE) {
                 echo "Successfully Registered! You can now login!";

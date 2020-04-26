@@ -21,11 +21,18 @@
         trigger_error('Invalid query: ' . $connection->error);
     }
 
+    //Check if Player is Banned
     
 
     //If player Found Return 1 if not Return 0
     if($query->num_rows > 0){
-        echo "1";
+        while($row = $query->fetch_assoc()){
+            if($row["banned"] === "false"){
+                echo "1";
+            }else {
+                echo "0";
+            }
+        }
     } else {
         echo "0";
     }

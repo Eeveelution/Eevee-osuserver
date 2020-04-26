@@ -11,7 +11,7 @@
 
     $connection = new mysqli("localhost", $mysql_username, $mysql_password, $mysql_database);
 
-    $sql_getrankings = "SELECT * FROM players ORDER BY score DESC";
+    $sql_getrankings = "SELECT * FROM players WHERE banned='false' ORDER BY score DESC";
     $query = $connection->query($sql_getrankings);
 
     $index = 1;

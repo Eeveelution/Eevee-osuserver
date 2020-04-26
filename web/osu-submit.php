@@ -68,7 +68,31 @@
 	/////Debug: Check for Score ID Duplicates
 	echo "<br/> $getscoreid->num_rows";
 
-	if((int)$score[9] > explode(",",$multipleresults[0])[3]){
+	//Check if User has been Banned
+	$banned = false;
+
+	$bannedsql = "SELECT * FROM players WHERE username='".$connection->real_escape_string($score[0])."'";
+	$bannedresults = $connection->query($bannedsql);
+
+	if($bannedresults->num_rows > 0){
+		while($row = $bannedresults->fetch_assoc()){
+			if($row["banned"] === "true") $banned = true;
+		}
+	}
+
+	$ranked = false;
+
+	$rankedsql = "SELECT * FROM mapstatus WHERE md5='".$score[0]."'";
+	$rankedresult = $connection->query($rankedsql);
+
+	if($rankedresult->num_rows > 0){
+		while($row = $rankedresult->fetch_assoc()){
+			if($row["status"] == "1" && $row["special"] == "0") $ranked = true;
+		}
+	}
+
+	//If Score is Higher than old Run and User issnt Banned and Map Is ranked
+	if((int)$score[9] > explode(",",$multipleresults[0])[3] && !$banned){
 		//If Submitted SQL
 		$forinsert = $connection->query(
 			(
