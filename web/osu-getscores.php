@@ -27,5 +27,5 @@
 
         }
     }
-
+    $connection->close();
 ?>

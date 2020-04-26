@@ -121,4 +121,6 @@
 		fwrite($file, "YES");
 		fclose($file);
 	}
+	$connection->close();
+	
 ?>
