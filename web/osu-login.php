@@ -21,9 +21,7 @@
         trigger_error('Invalid query: ' . $connection->error);
     }
 
-    $file = fopen("what.txt", "w");
-    fwrite($file, $query->num_rows);
-    fclose($file);
+    
 
     //If player Found Return 1 if not Return 0
     if($query->num_rows > 0){

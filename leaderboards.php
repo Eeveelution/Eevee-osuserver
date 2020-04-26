@@ -18,7 +18,7 @@
     echo "Rank | Username | Ranked Score <br/><br/>";
     if($query->num_rows > 0){
         while($row = $query->fetch_assoc()){
-            echo "" . $index . "   |   " . $row["playername"] . "   |   " . $row["score"] . "<br/>";
+            echo $index . " | " . "<a href='players.php?username=" . $row["playername"] . "'>". $row["playername"] . "</a> | " . $row["score"] . "<br/>";
             $index++;
         }
     }

@@ -1,0 +1,20 @@
+<html>
+
+    <head>
+
+    </head>
+
+    <body>
+        Please Log into the Admin Panel using your Credentials: <br/>
+
+        <form action="admin/panel.php" method="post">
+            <p>Username</p>
+            <input type="text" name="username"/>
+            <p>Password</p>
+            <input type="password" name="what"/>
+            <input type="submit"/>
+        </form>
+
+    </body>
+
+</html>
