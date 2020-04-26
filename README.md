@@ -6,10 +6,10 @@ To run Import eevee.sql and change mysql login details in config.php
 # Yet to be Added:
 
 * Ingame Ranking Display Beatmap (Look Below on how this will work) 
-* Admin Panel //EXPECTEED AT PATCH 2.1
-* Beatmap Ranking System //EXPECTEED AT PATCH 2.1
-* Staff Managment //EXPECTEED AT PATCH 2.1
-* Privledges //EXPECTEED AT PATCH 2.1
+* Admin Panel //EXPECTEED AT PATCH 2.2
+* Beatmap Ranking System //EXPECTEED AT PATCH 2.2
+* Staff Managment //EXPECTEED AT PATCH 2.2
+* Privledges //EXPECTEED AT PATCH 2.2
 
 # Ingame Ranking Display Beatmap
 
