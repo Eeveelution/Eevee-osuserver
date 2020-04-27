@@ -1,5 +1,5 @@
 <?php
-
+    session_start();
     include "../config.php";
     ;
     
@@ -35,8 +35,33 @@
         echo "As a member of the Beatmap Appreciation Team you cannot ban Players";
     }
     function com_privledges(){
+        $_SESSION["username_s"] = $_GET["username"];
+        $_SESSION["password_s"] = $_GET["pass"];
         echo<<<END
-        <h1>Welcome to the Ranking Panel</h1>
+        <h1>Welcome to the Ban Panel</h1>
+
+        <form action="banpanel-final.php" method="post">
+            <p>Username:</p>
+            <input type="text" name="banname"/>
+            <p>Reason of Ban:</p>
+            <textarea name="reason" rows="16" cols="48">
+Hello, <username>!
+Unfortnatly we have recently caught you <action>...
+So you left us with no choise but to Give you a
+restriction that will last for <time>.
+
+
+
+
+
+
+
+
+
+Kind Regards. osu!2007 Support
+            </textarea><br><br>
+            <input type="submit" value="Ban Player"/>
+        </form>
 END;
     }
 
