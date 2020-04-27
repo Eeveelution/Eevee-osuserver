@@ -10,8 +10,20 @@
                      );
     $query_getscores = $connection->query($sql_getscores);
 
-    
+    $sql_getrankingstatus = "SELECT * FROM mapstatus WHERE md5='".$beatmaphash."'";
+    $getrankingstatus_query = $connection->query($sql_getrankingstatus);
 
+    if($getrankingstatus_query->num_rows > 0){
+        while($row = $getrankingstatus_query->fetch_assoc()){
+            if($row["status"] == "0"){
+                echo "0:Unranked Map!:0:0:0:0:0:0:0:0:False:0\n";
+                die();
+            }
+        }
+    } else {
+        echo "0:Not Submitted Map!:0:0:0:0:0:0:0:0:False:0\n";
+            die();
+    }
     
 
     if($query_getscores->num_rows > 0){

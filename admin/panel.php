@@ -1,5 +1,5 @@
 <?php
-
+    session_start();
     include "../config.php";
     ;
     
@@ -34,6 +34,7 @@
         echo "<a href='rankingpanel.php?username=".''.$_POST["username"].''.'&pass='.hash("md5",$_POST["pass"]).''."'>Rank Beatmaps</a><br/>";
         echo "<a href='banpanel.php?username=".''.$_POST["username"].''.'&pass='.hash("md5",$_POST["pass"]).''."'>Ban Users</a><br/>";
         echo "<a href='staffadd.php?username=".''.$_POST["username"].''.'&pass='.hash("md5",$_POST["pass"]).''."'>Add Staff</a><br/>";
+        echo "<br><a href='recalc.php?username=".''.$_POST["username"].''.'&pass='.hash("md5",$_POST["pass"]).''."'>Recalculate Scores for All Users</a><br/>";
     }
     function bat_privledges(){
         echo "Welcome to this barebones admin panel <br/><br/> You have BAT Privledges, you can: <br/><br/>";

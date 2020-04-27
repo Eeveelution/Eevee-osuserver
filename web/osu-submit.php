@@ -12,7 +12,7 @@
 	}
 
 	//Initialize Calculation for Total Score
-	$sql_gettotal = sprintf('SELECT * FROM scores WHERE username="%s"', explode(":", $_GET["score"])[1]);
+	$sql_gettotal = sprintf('SELECT * FROM scores WHERE username="%s" AND ranked="1" AND pass="True"', explode(":", $_GET["score"])[1]);
 	$query = $connection->query(($sql_gettotal));
 	$scores = array();
 	$totalscore = 0;
@@ -80,14 +80,14 @@
 		}
 	}
 
-	$ranked = false;
+	$ranked = "0";
 
 	$rankedsql = "SELECT * FROM mapstatus WHERE md5='".$score[0]."'";
 	$rankedresult = $connection->query($rankedsql);
 
 	if($rankedresult->num_rows > 0){
 		while($row = $rankedresult->fetch_assoc()){
-			if($row["status"] == "1" && $row["special"] == "0") $ranked = true;
+			$ranked = $row["status"];
 		}
 	}
 
@@ -107,8 +107,8 @@
 		if($forinsert->num_rows === 0){
 			//If not, Submit a New Play
 			//Insertion SQL
-			$sql_insert = sprintf('INSERT INTO scores (scoreid, beatmaphash, username, score, maxcombo, hit300, hit100, hit50, hit0, hitGeki, hitKatu, perfect, mods, pass) VALUES (%s, "%s", "%s", %s, %s, %s, %s, %s, %s, %s, %s, "%s", %s, "%s")',
-				$getscoreid->num_rows, $score[0], $score[1], $score[9], $score[10], $score[3], $score[4], $score[5], $score[8], $score[6], $score[7], $score[11], $score[13], $score[14]
+			$sql_insert = sprintf('INSERT INTO scores (scoreid, beatmaphash, username, score, maxcombo, hit300, hit100, hit50, hit0, hitGeki, hitKatu, perfect, mods, pass, ranked) VALUES (%s, "%s", "%s", %s, %s, %s, %s, %s, %s, %s, %s, "%s", %s, "%s", "%s")',
+				$getscoreid->num_rows, $score[0], $score[1], $score[9], $score[10], $score[3], $score[4], $score[5], $score[8], $score[6], $score[7], $score[11], $score[13], $score[14], $ranked
 			);
 			//Check if Insertion was Successfull
 			if($connection->query(($sql_insert)) === TRUE){
@@ -127,14 +127,16 @@
 				echo "<br/>updated play";
 			}
 		}
+		if($ranked == "1"){
+			//Prepare SQL For Updating Ranked Score of a Player
+			echo "nani";
+			$sql_updatescore = sprintf('UPDATE players SET score=%s WHERE playername="%s"', $totalscore, $score[1]);
 
-		//Prepare SQL For Updating Ranked Score of a Player
-		$sql_updatescore = sprintf('UPDATE players SET score=%s WHERE playername="%s"', $totalscore, $score[1]);
-
-		if($connection->query(($sql_updatescore)) === TRUE){
-			echo "<br/>updated score";
-		} else {
-			echo "Error: " . $sql_insert . "<br>" . $connection->error;
+			if($connection->query(($sql_updatescore)) === TRUE){
+				echo "<br/>updated score";
+			} else {
+				echo "Error: " . $sql_insert . "<br>" . $connection->error;
+			}
 		}
 		//Save Replay (if sent)
 
