@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 26, 2020 at 11:38 PM
+-- Generation Time: Apr 27, 2020 at 05:54 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -36,6 +36,12 @@ CREATE TABLE `mapstatus` (
   `data` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `mapstatus`
+--
+
+INSERT INTO `mapstatus` (`id`, `md5`, `status`, `rankedby`, `special`, `data`) VALUES
+
 -- --------------------------------------------------------
 
 --
@@ -47,14 +53,13 @@ CREATE TABLE `players` (
   `playername` text NOT NULL,
   `md5pass` text NOT NULL,
   `score` int(11) NOT NULL,
-  `banned` text NOT NULL
+  `banned` text NOT NULL,
+  `reason` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `players`
 --
-
-
 
 -- --------------------------------------------------------
 
@@ -76,7 +81,8 @@ CREATE TABLE `scores` (
   `hitKatu` int(11) NOT NULL,
   `perfect` text NOT NULL,
   `mods` int(11) NOT NULL,
-  `pass` text NOT NULL
+  `pass` text NOT NULL,
+  `ranked` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -99,8 +105,6 @@ CREATE TABLE `staff` (
 --
 -- Dumping data for table `staff`
 --
-
-INSERT INTO `staff` (`userid`, `username`, `privledge`) VALUES
 
 --
 -- Indexes for dumped tables

@@ -5,8 +5,10 @@
 </head>
 
 <body>
-<center> <h1>
+<h1>
+
 <?php
+    session_start();
     include "config.php";
     error_reporting(E_ERROR | E_WARNING | E_PARSE);
     $connection = new mysqli("localhost", $mysql_username, $mysql_password, $mysql_database);
@@ -19,14 +21,16 @@
         while($row = $getuserdata->fetch_assoc()){
             
             echo $row["playername"];
-            echo "<h5>Score</h5>";
-            echo "</h1><h2>". $row["score"];
+            echo "<br></h1>Score:".$row["score"];
+
+            echo "<br><br><h2>Top Scores:</h2><br>";
+
+            $sql_getbestscores = sprintf("SELECT * FROM scores WHERE username='%s' ORDER BY score DESC LIMIT 50", $_GET["username"]);
         }
     }
 
     
 ?>
- </center>
 </body>
 
 </html>
