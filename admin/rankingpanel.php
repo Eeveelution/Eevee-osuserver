@@ -34,6 +34,9 @@
     }
     function bat_privledges(){
         echo<<<END
+
+        <a href="panel.php">Back to Main Panel</a><br><br>
+
         <h1>Welcome to the Ranking Panel</h1>
         <p>Add Beatmap to the Database:</p>
 

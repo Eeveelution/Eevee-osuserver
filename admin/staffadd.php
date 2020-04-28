@@ -30,6 +30,8 @@
 
     function all_privledges(){
     echo<<<END
+        <a href="panel.php">Back to Main Panel</a><br><br>
+
         <h2>Welcome to the Staff Addition Screen</h2>
         <form action="staffadd-final.php" method="post">
         <p>Username of Player</p>

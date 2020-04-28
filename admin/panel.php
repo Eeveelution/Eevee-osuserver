@@ -29,6 +29,14 @@
         echo "no access, get away now";
     }
     function all_privledges(){
+        echo<<<END
+        osu!2007 Server | 
+        <a href="index.php">Home</a> |
+        <a href="leaderboards.php">Rankings</a> |
+        <a href="login.html">Login</a> |
+        <a href="register.html">Register</a> |
+        <a href="admin.html">Admin Panel</a> | <br><br>
+END;
         echo "Welcome to this barebones admin panel <br/><br/> You have all Possible Privledges, you can: <br/><br/>";
         echo "Rank/Unrank Beatmaps, Ban Users, Add Staff <br/><br/><br/>";
         echo "<a href='rankingpanel.php?username=".''.$_POST["username"].''.'&pass='.hash("md5",$_POST["pass"]).''."'>Rank Beatmaps</a><br/>";

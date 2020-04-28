@@ -38,6 +38,9 @@
         $_SESSION["username_s"] = $_GET["username"];
         $_SESSION["password_s"] = $_GET["pass"];
         echo<<<END
+
+        <a href="panel.php">Back to Main Panel</a><br><br>
+
         <h1>Welcome to the Ban Panel</h1>
 
         <form action="banpanel-final.php" method="post">
