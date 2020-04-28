@@ -5,15 +5,15 @@
     
     $connection = new mysqli("localhost", $mysql_username, $mysql_password, $mysql_database);
     
-    $checkpassword = sprintf("SELECT * FROM players WHERE playername='%s' AND md5pass='%s'", $_GET["username"], $_GET["pass"]);
+    $checkpassword = sprintf("SELECT * FROM players WHERE playername='%s' AND md5pass='%s'", $_SESSION["username"], $_SESSION["password"]);
 
     $passresponse = $connection->query($checkpassword);
     if($passresponse->num_rows !== 1){
         echo $checkpassword;
-        echo "wrong password <br>".$_GET["pass"];
+        echo "wrong password <br>".$_SESSION["password"];
     }
 
-    $check_privledge = sprintf("SELECT * FROM staff WHERE username='%s'", $_GET["username"]);
+    $check_privledge = sprintf("SELECT * FROM staff WHERE username='%s'", $_SESSION["username"]);
     $response = $connection->query($check_privledge);
 
     if($response->num_rows > 0){
@@ -35,9 +35,12 @@
         echo "As a member of the Beatmap Appreciation Team you cannot ban Players";
     }
     function com_privledges(){
-        $_SESSION["username_s"] = $_GET["username"];
-        $_SESSION["password_s"] = $_GET["pass"];
+        $_SESSION["username_s"] = $_SESSION["username"];
+        $_SESSION["password_s"] = $_SESSION["password"];
         echo<<<END
+
+        <a href="panel.php">Back to Main Panel</a><br><br>
+
         <h1>Welcome to the Ban Panel</h1>
 
         <form action="banpanel-final.php" method="post">
