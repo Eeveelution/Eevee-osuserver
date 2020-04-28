@@ -5,7 +5,7 @@
     
     $connection = new mysqli("localhost", $mysql_username, $mysql_password, $mysql_database);
     
-    $checkpassword = sprintf("SELECT * FROM players WHERE playername='%s' AND md5pass='%s'", $_POST["username"], hash("md5",$_POST["pass"]));
+    $checkpassword = sprintf("SELECT * FROM players WHERE playername='%s' AND md5pass='%s'", $_SESSION["username"], $_SESSION["password"]);
 
     $passresponse = $connection->query($checkpassword);
     if($passresponse->num_rows !== 1){
@@ -14,7 +14,7 @@
         die();
     }
 
-    $check_privledge = sprintf("SELECT * FROM staff WHERE username='%s'", $_POST["username"]);
+    $check_privledge = sprintf("SELECT * FROM staff WHERE username='%s'", $_SESSION["username"]);
     $response = $connection->query($check_privledge);
 
     if($response->num_rows > 0){
@@ -61,7 +61,7 @@
             
             $sql_insert = sprintf(
                 "INSERT INTO mapstatus (id, md5, status, rankedby, special, data) VALUES (%s,'%s','%s','%s','no','%s')",
-                    $mapid_i, $md5, $__sql_status_converted, $_POST["username"], $data
+                    $mapid_i, $md5, $__sql_status_converted, $_SESSION["username"], $data
             );
             
             if($_connection->query($sql_insert) === TRUE){

@@ -5,7 +5,7 @@
     
     $connection = new mysqli("localhost", $mysql_username, $mysql_password, $mysql_database);
     
-    $checkpassword = sprintf("SELECT * FROM players WHERE playername='%s' AND md5pass='%s'", $_GET["username"], $_GET["pass"]);
+    $checkpassword = sprintf("SELECT * FROM players WHERE playername='%s' AND md5pass='%s'", $_SESSION["username"], $_SESSION["password"]);
 
     $passresponse = $connection->query($checkpassword);
     if($passresponse->num_rows !== 1){
@@ -14,7 +14,7 @@
         die();
     }
 
-    $check_privledge = sprintf("SELECT * FROM staff WHERE username='%s'", $_GET["username"]);
+    $check_privledge = sprintf("SELECT * FROM staff WHERE username='%s'", $_SESSION["username"]);
     $response = $connection->query($check_privledge);
 
     if($response->num_rows > 0){
