@@ -1,7 +1,14 @@
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="css/marginfix.css"
+    <style>
+        h1 {
+            margin: 0;
+        }
+        h2 {
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -51,7 +58,7 @@ END;
     if($getuserdata->num_rows > 0){
         
         while($row = $getuserdata->fetch_assoc()){
-            
+            echo "<br>";
             echo "<br><h1>".$row["playername"]."</h1>";
             echo "<br></h1>Score:".$row["score"];
 
