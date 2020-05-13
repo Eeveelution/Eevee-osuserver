@@ -1,7 +1,7 @@
 <html>
 
 <head>
-
+    <link rel="stylesheet" type="text/css" href="css/marginfix.css"
 </head>
 
 <body>
@@ -55,9 +55,44 @@ END;
             echo "<br><h1>".$row["playername"]."</h1>";
             echo "<br></h1>Score:".$row["score"];
 
-            echo "<br><br><h2>Top Scores:</h2><br>";
+            $sql_getrank = "SELECT * FROM players WHERE banned='false'";
+            $getrank_query = $connection->query($sql_getrank);
+            
+            $rank = 1;
 
-            $sql_getbestscores = sprintf("SELECT * FROM scores WHERE username='%s' ORDER BY score DESC LIMIT 50", $_GET["username"]);
+            if($getrank_query->num_rows > 0){
+                while($row = $getrank_query->fetch_assoc()){
+                    if($row["playername"] == $_GET["username"]){
+                        echo "<br>Score Rank: ".$rank;
+
+                    }
+                    $rank++;
+                }
+            }
+
+            echo "<br><br><br><h2>Top 5 Scores:</h2><br><br><br>";
+
+            $sql_getbestscores = sprintf("SELECT * FROM scores WHERE username='%s' ORDER BY score DESC LIMIT 5", $_GET["username"]);
+            $query_scores = $connection->query($sql_getbestscores);
+
+            if($query_scores->num_rows > 0){
+                while($row = $query_scores->fetch_assoc()){
+                    $sql_beatmapheader = sprintf("SELECT * FROM mapstatus WHERE md5='%s'", $row["beatmaphash"]);
+                    $result = $connection->query($sql_beatmapheader);
+
+                    if($result->num_rows > 0){
+                        while($header = $result->fetch_assoc()){
+                            echo "<a href='beatmaps/scores.php?md5=".$row["beatmaphash"]."'>";
+                            echo "<h2>".$header["data"]."</h2>";
+                            echo "</a>";
+                            if($row["mods"] == "1") echo "+NF/EZ";
+                            else if($row["mods"] == "2") echo "+NFEZ";
+                            echo "<p>Score: ".$row["score"]."</p><br>";
+                        }
+                    }
+                }
+            }
+            echo sprintf("<a href='scoredump.php?username=%s'>Get Score Dump</a>", '"'.$_GET["username"].'"');
         }
     }
 

@@ -66,7 +66,7 @@
 		}
 	}
 	/////Debug: Check for Score ID Duplicates
-	echo "<br/> $getscoreid->num_rows";
+	echo "<br/> $getscoreid->num_rows<br>KURWA";
 
 	//Check if User has been Banned
 	$banned = false;
@@ -92,6 +92,9 @@
 	}
 
 	//If Score is Higher than old Run and User issnt Banned and Map Is ranked
+
+	echo "<br>ZZZZZ ".(int)$score[9]."<br>";
+
 	if((int)$score[9] > explode(",",$multipleresults[0])[3] && !$banned){
 		//If Submitted SQL
 		$forinsert = $connection->query(
@@ -102,14 +105,15 @@
 					)
 				)
 			);
-		
+		echo "<br>FUCKING SSHIT<br>";
 		//Check If Player Has Submitted a play on this Map
 		if($forinsert->num_rows === 0){
 			//If not, Submit a New Play
 			//Insertion SQL
 			$sql_insert = sprintf('INSERT INTO scores (scoreid, beatmaphash, username, score, maxcombo, hit300, hit100, hit50, hit0, hitGeki, hitKatu, perfect, mods, pass, ranked) VALUES (%s, "%s", "%s", %s, %s, %s, %s, %s, %s, %s, %s, "%s", %s, "%s", "%s")',
-				$getscoreid->num_rows, $score[0], $score[1], $score[9], $score[10], $score[3], $score[4], $score[5], $score[8], $score[6], $score[7], $score[11], $score[13], $score[14], $ranked
+				$getscoreid->num_rows+1, $score[0], $score[1], $score[9], $score[10], $score[3], $score[4], $score[5], $score[8], $score[6], $score[7], $score[11], $score[13], $score[14], $ranked
 			);
+			echo "<br>".$sql_insert."<br>";
 			//Check if Insertion was Successfull
 			if($connection->query(($sql_insert)) === TRUE){
 				echo "<br/>good update";
@@ -128,15 +132,10 @@
 			}
 		}
 		if($ranked == "1"){
-			//Prepare SQL For Updating Ranked Score of a Player
-			echo "nani";
-			$sql_updatescore = sprintf('UPDATE players SET score=%s WHERE playername="%s"', $totalscore, $score[1]);
-
-			if($connection->query(($sql_updatescore)) === TRUE){
-				echo "<br/>updated score";
-			} else {
-				echo "Error: " . $sql_insert . "<br>" . $connection->error;
-			}
+			$file = fopen("what the fuck.txt", "w");
+			fwrite($file, json_encode($_GET));
+			fclose($file);
+			Recalc();
 		}
 		//Save Replay (if sent)
 
@@ -148,5 +147,40 @@
 		fclose($file);
 	}
 	$connection->close();
+
+	function Recalc(){
+		include "../config.php";
+		$connection = new mysqli("localhost", $mysql_username, $mysql_password, $mysql_database);
+	
+	
+		$all_users = "SELECT * FROM players";
+		$all_users_query = $connection->query($all_users);
+	
+		if($all_users_query->num_rows > 0){
+			while($user = $all_users_query->fetch_assoc()){
+			   
+				$totalscore = 0;
+	
+				$scores_sql = sprintf("SELECT * FROM scores WHERE username='%s' AND pass='True' AND ranked='1'", $user["playername"]);
+				$scores = $connection->query($scores_sql);
+	
+				if($scores->num_rows > 0){
+					while($row = $scores->fetch_assoc()){
+						$totalscore += $row["score"];
+					}
+				}
+	
+				$sql_updatescore = sprintf('UPDATE players SET score=%s WHERE playername="%s"', $totalscore, $user["playername"]);
+	
+				if($connection->query(($sql_updatescore)) === TRUE){
+					echo "<br/>updated score for ".$user["playername"];
+				} else {
+					echo "Error: " . $sql_insert . "<br>" . $connection->error;
+				}
+	
+			}
+		}
+	
+	}
 	
 ?>
