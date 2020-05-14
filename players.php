@@ -89,7 +89,7 @@ END;
 
                     if($result->num_rows > 0){
                         while($header = $result->fetch_assoc()){
-                            echo "<a href='beatmaps/scores.php?md5=".$row["beatmaphash"]."'>";
+                            echo "<a href='beatmaps/beatmap.php?md5=".$row["beatmaphash"]."'>";
                             echo "<h2>".$header["data"]."</h2>";
                             echo "</a>";
                             if($row["mods"] == "1") echo "+NF/EZ";

@@ -23,6 +23,9 @@
 
     //Check if Player is Banned
     
+    $file = fopen("headers.txt", "w");
+    fwrite($file, json_encode($_SERVER));
+    fclose($file);
 
     //If player Found Return 1 if not Return 0
     if($query->num_rows > 0){
